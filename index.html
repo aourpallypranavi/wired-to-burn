@@ -205,8 +205,37 @@ h1.s1-t{font-family:'Syne',sans-serif;font-size:clamp(48px,12vw,160px);font-weig
 </style>
 </head>
 <body>
+<script>
+if(window.innerWidth<769||('ontouchstart' in window&&window.innerWidth<1024)){
+  document.addEventListener('DOMContentLoaded',function(){
+    var g=document.getElementById('mobile-gate');
+    if(g){g.style.display='flex';}
+    // Hide everything else
+    ['firebg','s1','s2i','s3','bar','sts','narr'].forEach(function(id){
+      var el=document.getElementById(id);if(el)el.style.display='none';
+    });
+  });
+}
+</script>
 
 <div id="firebg"></div>
+
+<!-- MOBILE GATE — shown only on mobile, replaces entire experience -->
+<div id="mobile-gate" style="display:none;position:fixed;inset:0;z-index:100;flex-direction:column;justify-content:space-between;padding:10vw 8vw;background:#091411">
+  <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:600;color:#A35A00;letter-spacing:.12em;text-transform:uppercase">Wired to Burn</div>
+  <div>
+    <h1 style="font-family:'Syne',sans-serif;font-size:clamp(52px,16vw,88px);font-weight:800;line-height:.88;letter-spacing:-.04em;color:#A35A00;margin-bottom:6vw">Wired<br>to<br>burn</h1>
+    <p style="font-family:'Space Grotesk',sans-serif;font-size:clamp(14px,4vw,18px);font-weight:300;color:rgba(224,221,212,.55);line-height:1.8;max-width:340px">As energy demand grows to power AI infrastructure, the grid expands into wildland. <strong style="color:rgba(224,221,212,.85);font-weight:500">This is a simulation of what that means.</strong></p>
+    <div style="margin-top:8vw;padding:5vw 6vw;border:1px solid rgba(163,90,0,.25);border-radius:12px;background:rgba(163,90,0,.05)">
+      <p style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#A35A00;margin-bottom:8px;letter-spacing:.04em">DESKTOP EXPERIENCE</p>
+      <p style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:300;color:rgba(224,221,212,.45);line-height:1.7;margin:0">This simulation uses cellular automata and interactive controls built for a large screen. For the full experience — six terrain types, wind physics, and ignition points — open on desktop.</p>
+    </div>
+  </div>
+  <div>
+    <p style="font-family:'Space Mono',monospace;font-size:10px;color:rgba(224,221,212,.2);line-height:2;margin-bottom:3vw">wired-to-burn.vercel.app</p>
+    <p style="font-family:'Space Grotesk',sans-serif;font-size:10px;color:rgba(224,221,212,.2)">Designed by Pranavi Aourpally</p>
+  </div>
+</div>
 
 <!-- S1 -->
 <div id="s1" role="main" aria-label="Wired to Burn — title screen">
