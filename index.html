@@ -23,8 +23,8 @@ html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;-webkit-over
 body{background:var(--bg);color:var(--text);font-family:'Space Mono',monospace;cursor:default;touch-action:manipulation}
 
 /* FIRE BG */
-#firebg{position:fixed;inset:0;z-index:0;pointer-events:none}
-#firebg canvas{display:block!important;pointer-events:none}
+#firebg{position:fixed;inset:0;z-index:0}
+#firebg canvas{display:block!important}
 
 /* ============ S1 — TITLE ============ */
 #s1{position:fixed;inset:0;z-index:5;display:flex;flex-direction:column;justify-content:center;padding:0 8vw;transition:opacity 0.8s}
@@ -36,7 +36,7 @@ h1.s1-t{font-family:'Syne',sans-serif;font-size:clamp(48px,12vw,160px);font-weig
 .s1-btn:hover{background:var(--amber);color:var(--bg)}
 
 /* ============ S2 — INSTRUCTIONS ============ */
-#s2i{position:fixed;inset:0;z-index:10;display:none;flex-direction:column;justify-content:center;align-items:center;padding:4vh 5vw;overflow-y:auto;
+#s2i{position:fixed;inset:0;z-index:7;display:none;flex-direction:column;justify-content:center;align-items:center;padding:4vh 5vw;overflow-y:auto;
   background:rgba(9,20,17,0.92)}
 #s2i.show{display:flex}
 .ins{max-width:640px;text-align:center}
@@ -54,10 +54,8 @@ h1.s1-t{font-family:'Syne',sans-serif;font-size:clamp(48px,12vw,160px);font-weig
 /* ============ S3 — SIMULATION ============ */
 #s3{position:fixed;inset:0;z-index:3;display:none}
 #s3.show{display:block;z-index:4}
-#s3 canvas{display:block!important;position:absolute;top:0;left:0;pointer-events:none}
+#s3 canvas{display:block!important;position:absolute;top:0;left:0}
 #s3{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><circle cx="12" cy="12" r="4" fill="%23FF8822" opacity="0.7"/><circle cx="12" cy="12" r="8" fill="none" stroke="%23FF8822" stroke-width="1" opacity="0.25"/></svg>') 12 12,crosshair}
-#spark-overlay{position:fixed;inset:0;z-index:5;display:none;background:transparent;cursor:crosshair}
-#spark-overlay.show{display:block}
 
 /* ============ DESKTOP: RIGHT PICKER ============ */
 .picker{position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:30;display:none;flex-direction:column;gap:8px}
@@ -206,36 +204,34 @@ h1.s1-t{font-family:'Syne',sans-serif;font-size:clamp(48px,12vw,160px);font-weig
 </head>
 <body>
 <script>
-if(window.innerWidth<769||('ontouchstart' in window&&window.innerWidth<1024)){
-  document.addEventListener('DOMContentLoaded',function(){
-    var g=document.getElementById('mobile-gate');
-    if(g){g.style.display='flex';}
-    // Hide everything else
-    ['firebg','s1','s2i','s3','bar','sts','narr'].forEach(function(id){
-      var el=document.getElementById(id);if(el)el.style.display='none';
+(function(){
+  if(/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)||window.innerWidth<769){
+    document.addEventListener('DOMContentLoaded',function(){
+      var g=document.getElementById('mobile-gate');
+      if(g)g.style.display='flex';
     });
-  });
-}
+  }
+})();
 </script>
 
-<div id="firebg"></div>
-
-<!-- MOBILE GATE — shown only on mobile, replaces entire experience -->
-<div id="mobile-gate" style="display:none;position:fixed;inset:0;z-index:100;flex-direction:column;justify-content:space-between;padding:10vw 8vw;background:#091411">
-  <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:600;color:#A35A00;letter-spacing:.12em;text-transform:uppercase">Wired to Burn</div>
+<!-- MOBILE GATE -->
+<div id="mobile-gate" style="display:none;position:fixed;inset:0;z-index:1000;flex-direction:column;justify-content:space-between;padding:10vw 8vw;background:#091411;font-family:'Syne',sans-serif">
+  <div style="font-size:11px;font-weight:600;color:#A35A00;letter-spacing:.12em;text-transform:uppercase">Wired to Burn</div>
   <div>
-    <h1 style="font-family:'Syne',sans-serif;font-size:clamp(52px,16vw,88px);font-weight:800;line-height:.88;letter-spacing:-.04em;color:#A35A00;margin-bottom:6vw">Wired<br>to<br>burn</h1>
+    <h1 style="font-size:clamp(52px,16vw,88px);font-weight:800;line-height:.88;letter-spacing:-.04em;color:#A35A00;margin-bottom:6vw">Wired<br>to<br>burn</h1>
     <p style="font-family:'Space Grotesk',sans-serif;font-size:clamp(14px,4vw,18px);font-weight:300;color:rgba(224,221,212,.55);line-height:1.8;max-width:340px">As energy demand grows to power AI infrastructure, the grid expands into wildland. <strong style="color:rgba(224,221,212,.85);font-weight:500">This is a simulation of what that means.</strong></p>
     <div style="margin-top:8vw;padding:5vw 6vw;border:1px solid rgba(163,90,0,.25);border-radius:12px;background:rgba(163,90,0,.05)">
-      <p style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#A35A00;margin-bottom:8px;letter-spacing:.04em">DESKTOP EXPERIENCE</p>
-      <p style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:300;color:rgba(224,221,212,.45);line-height:1.7;margin:0">This simulation uses cellular automata and interactive controls built for a large screen. For the full experience — six terrain types, wind physics, and ignition points — open on desktop.</p>
+      <p style="font-size:12px;font-weight:700;color:#A35A00;margin-bottom:8px;letter-spacing:.04em">DESKTOP EXPERIENCE</p>
+      <p style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:300;color:rgba(224,221,212,.45);line-height:1.7;margin:0">This simulation uses cellular automata and interactive controls built for a large screen. Open on desktop for the full experience.</p>
     </div>
   </div>
   <div>
-    <p style="font-family:'Space Mono',monospace;font-size:10px;color:rgba(224,221,212,.2);line-height:2;margin-bottom:3vw">wired-to-burn.vercel.app</p>
+    <p style="font-family:'Space Mono',monospace;font-size:10px;color:rgba(224,221,212,.2);margin-bottom:6px">wired-to-burn.vercel.app</p>
     <p style="font-family:'Space Grotesk',sans-serif;font-size:10px;color:rgba(224,221,212,.2)">Designed by Pranavi Aourpally</p>
   </div>
 </div>
+
+<div id="firebg"></div>
 
 <!-- S1 -->
 <div id="s1" role="main" aria-label="Wired to Burn — title screen">
@@ -264,8 +260,6 @@ if(window.innerWidth<769||('ontouchstart' in window&&window.innerWidth<1024)){
 
 <!-- S3 SIM -->
 <div id="s3"></div>
-<!-- Spark overlay — receives taps/clicks for fire, sits above canvas but below UI -->
-<div id="spark-overlay"></div>
 
 <!-- DESKTOP PICKER -->
 <div class="picker" id="picker"></div>
@@ -402,33 +396,16 @@ new p5(function(p){var cells,bC,bR,bS=isMobile?10:14;
 
 // NAVIGATION
 function goToInstructions(){screen='s2i';document.getElementById('s1').classList.add('out');document.getElementById('s2i').classList.add('show');}
-function enterSimFromBtn(){enterSim();}
-// Touch fallback for iOS — buttons inside p5 canvas context need explicit touchend
-document.addEventListener('DOMContentLoaded',function(){
-  var s1btn=document.querySelector('.s1-btn');
-  if(s1btn){s1btn.addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();goToInstructions();},{passive:false});}
-  var insBtn=document.querySelector('.ins-enter');
-  if(insBtn){insBtn.addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();enterSim();},{passive:false});}
-});
 // Also support spacebar on desktop
 document.addEventListener('keydown',function(e){
   if((e.code==='Space'||e.code==='ArrowDown')&&screen==='s1'){e.preventDefault();goToInstructions();}});
 
 function enterSim(){screen='s3';document.getElementById('s2i').classList.remove('show');
   document.getElementById('s3').classList.add('show');
-  document.getElementById('spark-overlay').classList.add('show');
   ['bar','narr','sts'].forEach(function(id){document.getElementById(id).classList.add('show');});
   if(isMobile){document.getElementById('sheetToggle').classList.add('show');}
   else{document.getElementById('picker').classList.add('show');}
   startSim();
-  // Wire spark overlay touch/click — UI elements sit above this (z-index 30+)
-  var ov=document.getElementById('spark-overlay');
-  ov.addEventListener('click',function(e){handleSpark(e.clientX,e.clientY);});
-  ov.addEventListener('touchstart',function(e){
-    if(e.target!==ov)return; // let UI elements handle their own touches
-    e.preventDefault();
-    if(e.touches.length>0)handleSpark(e.touches[0].clientX,e.touches[0].clientY);
-  },{passive:false});
   setTimeout(function(){if(!nkShown.click){nkShown.click=true;showNk('nk-click',7000);}},1500);
   if(!isMobile)setTimeout(function(){if(!nkShown.pick){nkShown.pick=true;showNk('nk-pick',5000);}},4000);}
 
@@ -540,11 +517,11 @@ function startSim(){if(_p5)_p5.remove();
       cols=Math.floor(p.width/CS);rows=Math.floor(p.height/CS);tot=cols*rows;
       tT=new Uint8Array(tot).fill(EMPTY);tS=new Uint8Array(tot);tM=new Float32Array(tot);tBL=new Uint8Array(tot);genT(p);};
 
-    // TOUCH + CLICK = SPARK handled via spark-overlay div
-    p.mousePressed=function(){return false;};
-    p.touchStarted=function(){return false;};
+    // TOUCH + CLICK = SPARK
+    p.mousePressed=function(){handleSpark(p.mouseX,p.mouseY);};
+    p.touchStarted=function(){if(p.touches.length>0)handleSpark(p.touches[0].x,p.touches[0].y);return false;};
 
-    window.handleSpark=function(mx,my){
+    function handleSpark(mx,my){
       if(!simReady)return;
       // Skip if touching UI areas
       if(!isMobile&&mx>window.innerWidth-70)return;
